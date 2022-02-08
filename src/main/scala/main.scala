@@ -1,5 +1,5 @@
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{col, count, desc, round, sum}
+import org.apache.spark.sql.functions.{col, count, desc, mean, round, sum}
 
 object main extends App {
   val spark = SparkSession
@@ -337,7 +337,28 @@ object main extends App {
   roundaboutRoute.show()*/
   /*stationRoute.show()
   stopRoute.show()*/
-  trafficSignalRoute.show()
+  //trafficSignalRoute.show()
 
+  val countAll = myData.count()
+  val amenityCount = myData.filter("Amenity = true").count()
+  val bumpCount = myData.filter("Bump = true").count()
+  val crossingCount = myData.filter("Crossing = true").count()
+  val giveWayCount = myData.filter("Give_Way = true").count()
+  val junctionCount = myData.filter("Junction = true").count()
+  val noExitCount = myData.filter("No_Exit = true").count()
+  val railwayCount = myData.filter("Railway = true").count()
+  val roundaboutCount = myData.filter("Roundabout = true").count()
+  val stationCount = myData.filter("Station = true").count()
+  val stopCount = myData.filter("Stop = true").count()
+  println(BigDecimal(100.0 * amenityCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * bumpCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * crossingCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * giveWayCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * junctionCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * noExitCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * railwayCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * roundaboutCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * stationCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  println(BigDecimal(100.0 * stopCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   spark.close()
 }

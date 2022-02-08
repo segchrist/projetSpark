@@ -1,5 +1,5 @@
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{col, count, desc, mean, round, sum}
+import org.apache.spark.sql.functions.{col, desc, round, sum}
 
 object main extends App {
   val spark = SparkSession
@@ -76,7 +76,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Amenity"),
@@ -100,7 +100,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Bump"),
@@ -124,7 +124,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Crossing"),
@@ -148,7 +148,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Give_Way"),
@@ -172,7 +172,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Junction"),
@@ -196,7 +196,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("No_Exit"),
@@ -220,7 +220,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Railway"),
@@ -244,7 +244,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Roundabout"),
@@ -268,7 +268,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Station"),
@@ -292,7 +292,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Stop"),
@@ -316,7 +316,7 @@ object main extends App {
       .withColumnRenamed("nombre accident", "Global nombre accident"),
       "Severity")
     .withColumn("Difference between global percent",
-      round(col("Global Percent") - col("Percent"), 3))
+      round(col("Percent") - col("Global Percent"), 3))
     .select(
       col("Severity"),
       col("Traffic_Signal"),
@@ -325,10 +325,10 @@ object main extends App {
       col("Difference between global percent")
     )
 
-  //routeResume.show(5)
-  //severityResume.show()
-  /*amenityRoute.show()
-  bumpRoute.show()*/
+  routeResume.show(5)
+  severityResume.show()
+  amenityRoute.show()
+  bumpRoute.show()
   /*crossingRoute.show()
   giveWayRoute.show()*/
   /*junctionRoute.show()
@@ -350,7 +350,7 @@ object main extends App {
   val roundaboutCount = myData.filter("Roundabout = true").count()
   val stationCount = myData.filter("Station = true").count()
   val stopCount = myData.filter("Stop = true").count()
-  println(BigDecimal(100.0 * amenityCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  /*println(BigDecimal(100.0 * amenityCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   println(BigDecimal(100.0 * bumpCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   println(BigDecimal(100.0 * crossingCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   println(BigDecimal(100.0 * giveWayCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
@@ -360,5 +360,8 @@ object main extends App {
   println(BigDecimal(100.0 * roundaboutCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   println(BigDecimal(100.0 * stationCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
   println(BigDecimal(100.0 * stopCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+  routeResume.show(5)
+
+   */
   spark.close()
 }

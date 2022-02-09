@@ -1,5 +1,7 @@
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.functions.{col, desc, round, sum}
+
+
 
 object main extends App {
   val spark = SparkSession
@@ -53,6 +55,34 @@ object main extends App {
     .withColumn("Percent",
       round(col("nombre accident") / sum("nombre accident").over(), 3))
     .sort(desc("nombre accident"))
+
+  val countAll = myData.count()
+  val amenityCount = myData.filter("Amenity = true").count()
+  val bumpCount = myData.filter("Bump = true").count()
+  val crossingCount = myData.filter("Crossing = true").count()
+  val giveWayCount = myData.filter("Give_Way = true").count()
+  val junctionCount = myData.filter("Junction = true").count()
+  val noExitCount = myData.filter("No_Exit = true").count()
+  val railwayCount = myData.filter("Railway = true").count()
+  val roundaboutCount = myData.filter("Roundabout = true").count()
+  val stationCount = myData.filter("Station = true").count()
+  val stopCount = myData.filter("Stop = true").count()
+  val dataCountTraffic = List(
+    ("amenityCount", amenityCount), ("bumpCount", bumpCount),
+    ("crossingCount", crossingCount), ("giveWayCount", giveWayCount),
+    ("junctionCount", junctionCount), ("noExitCount", noExitCount),
+    ("railwayCount", railwayCount), ("roundaboutCount", roundaboutCount),
+    ("stationCount", stationCount), ("stopCount", stopCount)
+  )
+  val dataCountTrafficWithPercent = dataCountTraffic
+    .map(x => (
+      x._1,
+      x._2,
+      BigDecimal(100.0 * x._2 / countAll)
+        .setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
+    )
+    .sortBy(_._2)(Ordering[Long].reverse)
+
  val severityResume = routeData
     .groupBy("Severity")
     .sum("nombre accident")
@@ -325,43 +355,20 @@ object main extends App {
       col("Difference between global percent")
     )
 
-  routeResume.show(5)
+//  routeResume.show(5)
+//  dataCountTrafficWithPercent.foreach(println(_))
   severityResume.show()
-  amenityRoute.show()
-  bumpRoute.show()
-  /*crossingRoute.show()
-  giveWayRoute.show()*/
-  /*junctionRoute.show()
-  noExitRoute.show()*/
-  /*railwayRoute.show()
-  roundaboutRoute.show()*/
-  /*stationRoute.show()
-  stopRoute.show()*/
-  //trafficSignalRoute.show()
+//  amenityRoute.show()
+//  bumpRoute.show()
+//  crossingRoute.show()
+//  giveWayRoute.show()
+  junctionRoute.show()
+//  noExitRoute.show()
+//  railwayRoute.show()
+//  roundaboutRoute.show()
+//  stationRoute.show()
+//  stopRoute.show()
+//  trafficSignalRoute.show()
 
-  val countAll = myData.count()
-  val amenityCount = myData.filter("Amenity = true").count()
-  val bumpCount = myData.filter("Bump = true").count()
-  val crossingCount = myData.filter("Crossing = true").count()
-  val giveWayCount = myData.filter("Give_Way = true").count()
-  val junctionCount = myData.filter("Junction = true").count()
-  val noExitCount = myData.filter("No_Exit = true").count()
-  val railwayCount = myData.filter("Railway = true").count()
-  val roundaboutCount = myData.filter("Roundabout = true").count()
-  val stationCount = myData.filter("Station = true").count()
-  val stopCount = myData.filter("Stop = true").count()
-  /*println(BigDecimal(100.0 * amenityCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * bumpCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * crossingCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * giveWayCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * junctionCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * noExitCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * railwayCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * roundaboutCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * stationCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  println(BigDecimal(100.0 * stopCount / countAll).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble+"%")
-  routeResume.show(5)
-
-   */
   spark.close()
 }

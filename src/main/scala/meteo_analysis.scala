@@ -1,7 +1,7 @@
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{avg, col, count, desc, mean, round, sum, when}
 
-object main extends App {
+object meteo_analysis extends App {
   val spark = SparkSession
     .builder()
     .appName("Spark Projet")
@@ -121,7 +121,6 @@ object main extends App {
 
   dataMeanWindChillPerSev.show()
 
-/*
 
   val dataWeatherCondition = myFinalData
     .groupBy("Weather_Condition")
@@ -232,7 +231,6 @@ object main extends App {
     .withColumn("night_acc_rate_per_sev",round(col("night_acc_rate_per_sev")*100,2))
     .orderBy(desc("Severity"))
   dataNightPerSev.show()
-*/
 
   spark.close()
 }
